@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+    database_flash:
+        image: postgres
+        container_name: db_flash
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=flash
+        volumes:
+            - pgdata:/data/postgres
+
+    # app:
+    #     build: .
+    #     container_name: app_flash
+    #     restart: always
+    #     ports:
+    #         - 3333:3333
+    #         - 9229:9229
+    #     volumes:
+    #         - .:/usr/app
+    #     links:
+    #         - database_flash
+    #     depends_on:
+    #         - database_flash
+
+volumes:
+    pgdata:
+        driver: local
