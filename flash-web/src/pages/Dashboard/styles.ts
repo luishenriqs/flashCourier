@@ -1,60 +1,118 @@
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components'
 
 export const Container = styled.div`
-  background-color: #f5f5f5;
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 20px;
-
-  .mainContainer {
+    flex: 1;
+    flex-direction: column;
+    height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
 
-    .images {
-      display: flex;
-      flex-direction: row;
-      img {
-        width: 300px;
-      }
+    nav {
+        margin-top: 60px;
+        a {
+            color: #e6b733;
+            text-decoration: none;
+            padding: 25px;
+            font-size: 18px;
+            transition: opacity 0.2s;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
     }
-  }
+`
 
-  .presentation {
+const appearFromRight = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`
+
+export const AnimationContainer = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40px;
+
+    animation: ${appearFromRight} 1s;
+
+    svg {
+        margin-right: 16px;
+    }
+
+    strong {
+        margin-top: 30px;
+        font-size: 25px;
+        color: #fff;
+    }
+`
+
+export const TableContainer = styled.section`
     display: flex;
     flex-direction: column;
-    align-items: left;
-    text-align: left;
-    padding: 30px;
-
-    img {
-      width: 250px;
-    }
-
-    h1 {
-      width: 100%;
-      color: #969cb3;
-      font-size: 36px;
-      font-weight: normal;
-      padding: 20px 32px;
-    }
-  }
-
-  .buttons {
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-  }
-
-  .buttonContainer {
-    display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
-    margin: 50px;
+    padding: 40px 0;
 
-    Button {
-      margin: 0 40px;
+    thead {
+        width: 800px;
+        display: flex;
+        height: 58px;
+        margin: 5px 0;
+
+        tr {
+            width: 800px;
+            padding: 0 60px;
+            border-radius: 5px;
+        }
+
+        th {
+            color: #e6b733;
+            width: 350px;
+            padding: 10px 0;
+            text-align: center;
+            line-height: 24px;
+            font-size: 18px;
+            font-weight: normal;
+        }
     }
-  }
-`;
+
+    tbody {
+        width: 100%;
+        display: flex;
+        height: 58px;
+        margin: 5px 0;
+
+        tr {
+            width: 800px;
+            padding: 0 60px;
+            border-radius: 5px;
+        }
+
+        td {
+            color: #fff;
+            width: 350px;
+            padding: 10px 0;
+            text-align: center;
+            border: 0;
+            font-size: 24px;
+            font-weight: normal;
+
+            :first-child {
+                border-radius: 5px 0 0 5px;
+            }
+
+            :last-child {
+                border-radius: 0 5px 5px 0;
+            }
+        }
+    }
+`

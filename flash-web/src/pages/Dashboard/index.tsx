@@ -1,57 +1,84 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../../components/Header";
-import Button from "../../components/Button";
-import logo from "../../assets/flexgeLogoAzul30.png";
-import teacher1 from "../../assets/1.png";
-import teacher2 from "../../assets/2.png";
-import teacher3 from "../../assets/3.png";
-import teacher4 from "../../assets/4.png";
-import Footer from "../../components/Footer";
+import React, { useState, useEffect } from 'react'
+import api from '../../services/api'
+import { Link } from 'react-router-dom'
+import Logo from '../../assets/flash-courier-logo.png'
+import { Container, AnimationContainer, TableContainer } from './styles'
 
-import { Container } from "./styles";
+interface IProducts {
+    id: string
+    tracking_number: number
+    owner: string
+    email: string
+    product_type: string
+    status: string
+    created_at: string
+    updated_at: string
+}
 
 const Dashboard: React.FC = () => {
-  return (
-    <>
-      <Header size="small" />
-      <Container>
-        <div className="mainContainer">
-          <div className="presentation">
-            <img src={logo} alt="Logo" />
-            <h1>O melhor material ditático para professores particulares</h1>
-          </div>
-          <div>
-            <div className="images">
-              <img src={teacher1} alt="Teacher" />
-              <img src={teacher2} alt="Teacher" />
-            </div>
-            <div className="images">
-              <img src={teacher3} alt="Teacher" />
-              <img src={teacher4} alt="Teacher" />
-            </div>
-          </div>
-        </div>
-        <div className="buttons">
-          <div className="buttonContainer">
-            <Link to={"/contracts"}>
-              <Button className="secondButton" type="button">
-                Contratos
-              </Button>
-            </Link>
-          </div>
-          <div className="buttonContainer">
-            <Link to={"/companys"}>
-              <Button className="secondButton" type="button">
-                Companhias
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Container>
-      <Footer />
-    </>
-  );
-};
+    const [foundProduct, setFoundProduct] = useState<IProducts>()
 
-export default Dashboard;
+    const url = window.location
+
+    var params = url.pathname.split('/')
+    const tracking_number = params[2]
+
+    useEffect(() => {
+        const loadAppointments = async (): Promise<void> => {
+            const response = await api.get(
+                `/products/tracking/${tracking_number}`
+            )
+            const { product } = response.data
+            setFoundProduct(product)
+        }
+        loadAppointments()
+    }, [tracking_number])
+
+    return (
+        <>
+            <Container
+                style={{ background: 'linear-gradient(#6A8FC8, #6379B3)' }}
+            >
+                <nav>
+                    <Link to={`/`}>
+                        <strong>Voltar</strong>
+                    </Link>
+                </nav>
+                <AnimationContainer>
+                    <img src={Logo} alt="Logo" />
+
+                    {foundProduct ? (
+                        <>
+                            <strong>Produto encontrado:</strong>
+                            <TableContainer>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Tipo do produto</th>
+                                            <th>Status da entrega</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody key={foundProduct?.id}>
+                                        <tr>
+                                            <td>{foundProduct?.owner}</td>
+                                            <td>
+                                                {foundProduct?.product_type}
+                                            </td>
+                                            <td>{foundProduct?.status}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </TableContainer>
+                        </>
+                    ) : (
+                        <strong>Nenhum produto foi encontrado:</strong>
+                    )}
+                </AnimationContainer>
+            </Container>
+        </>
+    )
+}
+
+export default Dashboard
