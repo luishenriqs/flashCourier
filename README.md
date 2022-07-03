@@ -4,6 +4,12 @@ Teste Técnico para empresa de Logística Flash Courier
 
 # PARA EXECUTAR O PROJETO
 
+## TECNOLOGIAS UTILIZADAS
+
+- BACKEND - NodeJS, Prisma.IO, Express, Nodemon e Typescript.
+- FRONTEND - ReactJS, React-dom, React-router-dom, Unform, Axios, Polished, Styled-components, Typescript
+- BANCO DE DADOS - Postgresql
+
 ## CLONE O PROJETO DO REPOSITÓRIO
 
 https://github.com/luishenriqs/flashCourier
